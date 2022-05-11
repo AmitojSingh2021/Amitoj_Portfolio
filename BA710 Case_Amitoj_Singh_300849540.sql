@@ -16,21 +16,17 @@ Create a scooter sales table*/
 drop table if exists work.case_prod_sales;
 create table work.case_prod_sales as select * from ba710case.ba710_sales;
 
-/*Create a new table in WORK with product id and model name for just scooters
-Result should have 7 records.*/
+/*Create a new table in WORK with product id and model name for just scooters*/
 
 drop table if exists work.case_scooter_name;
 Create table work.case_scooter_name as select product_id, model from ba710case.ba710_prod where product_type='scooter' limit 7;
 
-/*Use a join to combine the table above that contains model name 
-to the sales information*/
+/*Use a join to combine the table above that contains model name to the sales information*/
 
 drop table if exists work.case_scooter_sales;
 Create table work.case_scooter_sales as select a.model, b.* from work.case_scooter_name a inner join ba710case.ba710_sales b on a.product_id=b.product_id; 
 
-/*Investigate Bat sales.  
-Select Bat models from your table.
-Count the number of Bat sales from your table.*/
+/*Investigate Bat sales. Select Bat models from your table. Count the number of Bat sales from your table.*/
 
 Select count(sales_transaction_date) from work.case_scooter_sales where model like 'bat';
 
@@ -38,8 +34,7 @@ Select count(sales_transaction_date) from work.case_scooter_sales where model li
 
 select max(sales_transaction_date) from work.case_scooter_sales where model like 'bat';
 
-/*Take a look at daily sales.
-Store Bat sales data in a new table; store the sales date as a date, and not a datetime*/
+/*Take a look at daily sales. Store Bat sales data in a new table; store the sales date as a date, and not a datetime*/
 
 drop table if exists work.case_bat_sales;
 Create table work.case_bat_sales as select *, date(sales_transaction_date) date From work.case_scooter_sales where model= 'Bat';
@@ -51,8 +46,7 @@ drop table if exists work.case_daily_sales;
 Create table work.case_daily_sales as select date, count(date) as sales_count from work.case_bat_sales group by date order by date desc;
 
 /*Quantify the sales drop*/
-/*Compute a cumulative sum of sales with one row per date
-Hint: Window Functions, Over*/
+/*Compute a cumulative sum of sales with one row per date*/
 
 drop table if exists work.case_bat_cum_sales;
 Create table work.case_bat_cum_sales as Select *, sum(sales_count) Over (order by date) as cumulative_sum from work.case_daily_sales;
@@ -171,8 +165,7 @@ drop table if exists work.case_lemon_lag_cum_sales;
 Create table work.case_lemon_lag_Cum_sales as Select * , lag(cumulative_sum,7) OVER (order by date) as PreviousSales 
  From work.case_lemon_cum_sales;
 
-/*Calculate a running sales growth as a percentage by comparing the
-current sales to sales from 1 week prior*/
+/*Calculate a running sales growth as a percentage by comparing the current sales to sales from 1 week prior*/
 
 drop table if exists work.case_lemon_weekly_running_sales;
 Create table work.case_lemon_weekly_running_sales as 
