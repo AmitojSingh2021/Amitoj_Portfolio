@@ -1,1 +1,1 @@
-# Amitoj_Portfolio: It includes my Academic projects which i did while doing Graduate certificate in Business Analytics and Insights. In this portfolio, i tried to demonstrate my skills in python and MySQL coding. 
+This portfolio includes my Academic projects which i did while doing Graduate certificate in Business Analytics and Insights. In this portfolio, i tried to demonstrate my skills in python and MySQL coding. 
