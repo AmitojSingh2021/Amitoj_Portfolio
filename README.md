@@ -1,1 +1,1 @@
-This portfolio includes my academic projects which i did while doing Graduate certificate in Business Analytics and Insights. In this portfolio, i tried to demonstrate my skills in python and MySQL coding. 
+In this portfolio, i tried to demonstrate my skills in python and MySQL coding. 
