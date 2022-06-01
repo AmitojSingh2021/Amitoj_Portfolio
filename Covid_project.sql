@@ -21,7 +21,7 @@ Select continent,
 Select location, 
 	MAX(cast(total_deaths as int)) as TotalDeathCount
 	From portfolio_project.dbo.coviddeaths
-	Where continent is not null 
+	Where total_deaths is not null
 	Group by Location
 	order by TotalDeathCount desc;
 
@@ -53,13 +53,14 @@ Select *
 
 	---Total doses administrated vs population country-wise analysis---
 
-with tda as (Select location,continent, date, population, new_vaccinations, 
-	sum(cast(new_vaccinations as bigint))
+with tda as (Select location,continent, max(date) as date, max(population) as population, 
+	max(sum(cast(new_vaccinations as bigint)))
 	over (partition by location order by location) as total_doses_administrated 
 	From portfolio_project.dbo.covidvaccines 
 	where population >50000000 and continent is not null and new_vaccinations is not null
+	group by location, continent
 	)
-	select *, (total_doses_administrated /population)*100 
+	select *, round((total_doses_administrated /population)*100,4) 
 	as PercentPopulationdoses from tda order by PercentPopulationdoses desc;
 
 	--- People fully vaccinated vs population---
